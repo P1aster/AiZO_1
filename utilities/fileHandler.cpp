@@ -1,6 +1,5 @@
 #include "fileHandler.h"
 #include <fstream>
-#include <sstream>
 #include <stdexcept>
 #include <iostream>
 #include <cstring>
@@ -11,37 +10,40 @@ std::vector<T> FileHandler<T>::readVectorFromFile() {
     std::ifstream file;
 
     while (true) {
+        std::cout << "To exit type 'exit': \n";
         std::cout << "Enter filename: ";
         std::cin >> filename;
         file.open(filename);
 
-        if (file) {
+        if (file || filename == "exit") {
             break;
         } else {
             std::cout << "File not found. Please try again.\n";
         }
     }
 
+    if (filename == "exit") {
+        return std::vector<T>();
+    }
+
     int size;
-    file >> size;
+    if (!(file >> size)) {
+        throw FileReadException();
+    }
 
     std::vector<T> vec(size);
     for (int i = 0; i < size; ++i) {
-        std::string line;
-        if (!std::getline(file, line)) {
-            throw FileReadException();
+        if (!(file >> vec[i])) {
+            vec.clear();
+            std::cout << "Failed to parse line " << i + 1 << ".\n";
+            break;
         }
-
-        std::istringstream iss(line);
-        T value;
-        if (!(iss >> value)) {
-            throw FileParseException();
-        }
-
-        vec[i] = value;
     }
 
+    file.close();
+
     return vec;
+
 }
 
 template <typename T>
@@ -72,3 +74,4 @@ void FileHandler<T>::writeVectorToFile(const std::vector<T>& vec) {
 template class FileHandler<int>;
 template class FileHandler<float>;
 template class FileHandler<char>;
+template class FileHandler<double>;

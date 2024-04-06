@@ -1,5 +1,4 @@
 #include <iostream>
-#include <chrono>
 
 #include "utilities/vectorGenerator.h"
 #include "utilities/fileHandler.h"
@@ -11,17 +10,15 @@
 #include "sort_algorithms/shellSort.h"
 #include "sort_algorithms/mergeSort.h"
 #include "utilities/printArray.h"
-
-enum DataType { INT = 1, FLOAT = 2, CHAR = 3 };
-enum Operation { GENERATE = 1, READ = 2 };
-enum SortMethod { BUBBLESORT = 1, QUICKSORT = 2, MERGESORT = 3, HEAPSORT = 4, INSERTIONSORT = 5, SHELLSORT = 6};
-enum WriteOption { YES = 1, NO = 2 };
-enum MenuOption { CONTINUE = 1, EXIT = 2 };
+#include "sort_method/sortHandler.h"
+#include "utilities/inputHandler.h"
+#include "menu/menu.h"
 
 
 int main() {
 
     //setup variables
+    MenuMode menuMode;
     DataType dataType;
     Operation operation;
     int size;
@@ -40,85 +37,139 @@ int main() {
     FileHandler<int> fileHandlerInt;
     FileHandler<float> fileHandlerFloat;
     FileHandler<char> fileHandlerChar;
+    FileHandler<double> fileHandlerDouble;
     TestSorting testSorting;
     PrintArray printVector;
-
-    // User input
-    int input;
+    InputHandler inputHandler;
 
     // Main menu
     do {
-        // Select data type
+
+        std::cout << "Select:\n1. Run Tests\n2. Play around\n";
+        menuMode = inputHandler.getEnumInput<MenuMode>(1,2);
+
         std::cout << "Select data type:\n1. Int\n2. Float\n3. Char\n";
-        std::cin >> input;
-        dataType = static_cast<DataType>(input);
+        dataType = inputHandler.getEnumInput<DataType>(1,3);
+
         // Select operation
         std::cout << "Select operation:\n1. Generate\n2. Read from file\n";
-        std::cin >> input;
-        operation = static_cast<Operation>(input);
+        operation = inputHandler.getEnumInput<Operation>(1,2);
+
         if (operation == GENERATE) {
             //Select vector size
             std::cout << "Pass generated vector size: ";
-            std::cin >> input;
-            size = static_cast<int>(input);
+            size = inputHandler.getEnumInput<int>(1,10000000);
         }
 
-        // Select sort method
-        std::cout << "Select sort method:\n1. BubbleSort\n2. QuickSort\n3. MergeSort\n4. HeapSort\n5. InsertionSort\n6. ShellSort\n";
-        std::cin >> input;
-        sortMethod = static_cast<SortMethod>(input);
-
-        // Select write option
-        std::cout << "Write to file?\n1. Yes\n2. No\n";
-        std::cin >> input;
-        writeOption = static_cast<WriteOption>(input);
-
-        auto start = std::chrono::high_resolution_clock::now();
-
-        // Perform operations based on user's choices
         switch (dataType) {
             case INT:
                 if (operation == GENERATE) {
                     vecInt = generatorInt.generateRandomVector(size);
-                } else {
-                    std::cout << "Pass input file path: ";
-                    std::cin >> inputfilename;
+                } else if(operation == READ) {
                     vecInt = fileHandlerInt.readVectorFromFile();
                 }
+                break;
+            case FLOAT:
+                if (operation == GENERATE) {
+                    vecFloat = generatorFloat.generateRandomVector(size);
+                } else if(operation == READ) {
+                    vecFloat = fileHandlerFloat.readVectorFromFile();
+                }
+                break;
+            case CHAR:
+                if (operation == GENERATE) {
+                    vecChar = generatorChar.generateRandomVector(size);
+                } else if(operation == READ) {
+                    vecChar = fileHandlerChar.readVectorFromFile();
+                }
+                break;
+        }
+
+        // Select sort method
+        std::cout << "Select sort method:\n1. BubbleSort\n2. QuickSort\n3. MergeSort\n4. HeapSort\n5. InsertionSort\n6. ShellSort\n";
+        sortMethod = inputHandler.getEnumInput<SortMethod>(1,6);
+
+        if(menuMode == RUNTESTS) {
+            goto runTestsJMP;
+        }
+
+        // Select write option
+        std::cout << "Write to file?\n1. Yes\n2. No\n";
+        writeOption = inputHandler.getEnumInput<WriteOption>(1,2);
+
+    
+
+        // Perform operations based on user's choices
+        switch (dataType) {
+            case INT:
+                std::cout << "\nVector before sorting:\n";
+                printVector.print(vecInt);
                 // Sort vecInt using chosen method
                 switch (sortMethod) {
                     case BUBBLESORT: {
-                        BubbleSort<int> bubbleSort;
-                        bubbleSort.sort(vecInt);
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<int, BubbleSort<int>> sortHandler(vecInt);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecInt = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
                     }
                         break;
                     case QUICKSORT: {
-                        PivotChoice pivotChoice = RANDOM; // or any other choice based on your logic
-                        QuickSort<int> quickSort;
-                        quickSort.sort(vecInt, pivotChoice);
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<int, QuickSort<int>> sortHandler(vecInt);
+                        // Sort the data
+                        sortHandler.sort(PivotChoice::RIGHT);
+                        vecInt = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
                     }
                         break;
                     case MERGESORT: {
-                        MergeSort<int> mergeSort;
-                        mergeSort.sort(vecInt);
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<int, MergeSort<int>> sortHandler(vecInt);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecInt = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
                     }
                         break;
                     case HEAPSORT: {
-                        HeapSort<int> heapSort;
-                        heapSort.sort(vecInt);
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<int, HeapSort<int>> sortHandler(vecInt);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecInt = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
                     }
                         break;
                     case INSERTIONSORT: {
-                        InsertionSort<int> insertionSort;
-                        insertionSort.sort(vecInt, std::less<>());
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<int, InsertionSort<int>> sortHandler(vecInt);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecInt = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
                     }
                         break;
                     case SHELLSORT: {
-                        ShellSort<int> shellSort;
-                        shellSort.sort(vecInt);
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<int, ShellSort<int>> sortHandler(vecInt);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecInt = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
                     }
                         break;
                 }
+                std::cout << "\nVector after sorting:\n";
+                printVector.print(vecInt);
+
                 // Check if sorted
                 if (testSorting.isSorted(vecInt)) {
                     std::cout << "Vector is sorted.\n";
@@ -130,12 +181,77 @@ int main() {
                 }
                 break;
             case FLOAT:
-                if (operation == GENERATE) {
-                    vecFloat = generatorFloat.generateRandomVector(100);
-                } else {
-                    vecFloat = fileHandlerFloat.readVectorFromFile();
+
+                std::cout << "\nVector before sorting:\n";
+                printVector.print(vecFloat);
+
+                // Sort vecInt using chosen method
+                switch (sortMethod) {
+                    case BUBBLESORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<float, BubbleSort<float>> sortHandler(vecFloat);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecFloat = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case QUICKSORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<float, QuickSort<float>> sortHandler(vecFloat);
+                        // Sort the data
+                        sortHandler.sort(PivotChoice::RIGHT);
+                        vecFloat = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case MERGESORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<float, MergeSort<float>> sortHandler(vecFloat);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecFloat = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case HEAPSORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<float, HeapSort<float>> sortHandler(vecFloat);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecFloat = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case INSERTIONSORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<float, InsertionSort<float>> sortHandler(vecFloat);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecFloat = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case SHELLSORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<float, ShellSort<float>> sortHandler(vecFloat);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecFloat = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
                 }
-                // Sort vecFloat using chosen method
+
+                std::cout << "\nVector after sorting:\n";
+                printVector.print(vecFloat);
+
                 // Check if sorted
                 if (testSorting.isSorted(vecFloat)) {
                     std::cout << "Vector is sorted.\n";
@@ -146,13 +262,78 @@ int main() {
                     fileHandlerFloat.writeVectorToFile(vecFloat);
                 }
                 break;
+
             case CHAR:
-                if (operation == GENERATE) {
-                    vecChar = generatorChar.generateRandomVector(100);
-                } else {
-                    vecChar = fileHandlerChar.readVectorFromFile();
+
+                std::cout << "\nVector before sorting:\n";
+                printVector.print(vecChar);
+                // Sort vecInt using chosen method
+                switch (sortMethod) {
+                    case BUBBLESORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<char, BubbleSort<char>> sortHandler(vecChar);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecChar = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case QUICKSORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<char, QuickSort<char>> sortHandler(vecChar);
+                        // Sort the data
+                        sortHandler.sort(PivotChoice::RIGHT);
+                        vecChar = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case MERGESORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<char, MergeSort<char>> sortHandler(vecChar);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecChar = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case HEAPSORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<char, HeapSort<char>> sortHandler(vecChar);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecChar = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case INSERTIONSORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<char, InsertionSort<char>> sortHandler(vecChar);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecChar = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
+                    case SHELLSORT: {
+                        // Create an instance of SortHandler with QuickSort as the sorting algorithm
+                        SortHandler<char, ShellSort<char>> sortHandler(vecChar);
+                        // Sort the data
+                        sortHandler.sort();
+                        vecChar = sortHandler.getData();
+                        // Print the execution time
+                        std::cout << "\nExecution time: " << sortHandler.getExecutionTime().count() << " milliseconds\n";
+                    }
+                        break;
                 }
-                // Sort vecChar using chosen method
+
+                std::cout << "\nVector after sorting:\n";
+                printVector.print(vecChar);
+
                 // Check if sorted
                 if (testSorting.isSorted(vecChar)) {
                     std::cout << "Vector is sorted.\n";
@@ -164,15 +345,29 @@ int main() {
                 }
                 break;
         }
+        continue;
 
-        auto end = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-        std::cout << "Time taken by function: " << duration.count() << " milliseconds" << std::endl;
+    runTestsJMP:
+
+            // Perform operations based on user's choices
+            std::cout << "Enter the number of times to run the test: ";
+            int n = inputHandler.getEnumInput<int>(1,10000000);
+            switch (dataType) {
+                case INT:
+                    testSorting.runTests(vecInt, sortMethod, n, fileHandlerDouble);
+                    break;
+                case FLOAT:
+                    testSorting.runTests(vecFloat, sortMethod, n, fileHandlerDouble);
+                    break;
+                case CHAR:
+                    testSorting.runTests(vecChar, sortMethod, n, fileHandlerDouble);
+                    break;
+            }
 
         // Ask user if they want to continue or exit
-        std::cout << "Select option:\n1. Continue\n2. Exit\n";
-        std::cin >> input;
-        menuOption = static_cast<MenuOption>(input);
+        std::cout << "\nSelect option:\n1. Continue\n2. Exit\n";
+        menuOption = inputHandler.getEnumInput<MenuOption>(1,2);
+
     } while (menuOption != EXIT);
 
     return 0;

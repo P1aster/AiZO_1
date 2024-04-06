@@ -1,7 +1,7 @@
 #include "InsertionSort.h"
 
 template <typename T>
-void InsertionSort<T>::sort(std::vector<T> &arr, std::less<> less) {
+void InsertionSort<T>::sort(std::vector<T> &arr) {
     for (int i = 1; i < arr.size(); i++) {
         T key = arr[i];
         int j = i - 1;

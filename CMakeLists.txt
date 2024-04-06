@@ -24,8 +24,10 @@ add_executable(AiZO_1 main.cpp
         utilities/vectorGenerator.h
         sort_algorithms/mergeSort.cpp
         sort_algorithms/mergeSort.h
-        menu/menu.cpp
         menu/menu.h
         sort_method/sortHandler.cpp
         sort_method/sortHandler.h
+        utilities/inputHandler.cpp
+        utilities/inputHandler.h
+
 )

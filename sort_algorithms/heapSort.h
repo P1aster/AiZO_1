@@ -13,7 +13,7 @@ public:
     void sort(std::vector<T>& arr);
 
 private:
-    void heapify(std::vector<T>& arr, int i);
+    void heapify(std::vector<T>& arr, int n, int i);
 };
 
 

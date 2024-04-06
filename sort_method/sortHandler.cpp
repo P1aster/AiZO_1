@@ -2,7 +2,6 @@
 #include "../tests/testSorting.h"
 #include "../sort_algorithms/bubbleSort.h"
 #include "../sort_algorithms/InsertionSort.h"
-#include "../sort_algorithms/quickSort.h"
 #include "../sort_algorithms/heapSort.h"
 #include "../sort_algorithms/shellSort.h"
 #include "../sort_algorithms/mergeSort.h"
@@ -12,24 +11,37 @@ SortHandler<T, SortAlgorithm>::SortHandler(std::vector<T> data) : data(data) {}
 
 template <typename T, typename SortAlgorithm>
 void SortHandler<T, SortAlgorithm>::sort(PivotChoice pivotChoice) {
+    auto start = std::chrono::high_resolution_clock::now();
     if constexpr (std::is_same_v<SortAlgorithm, QuickSort<T>>) {
         sortAlgorithm.sort(data, pivotChoice);
     }
     else {
         sortAlgorithm.sort(data);
     }
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    executionTime = duration;
 }
 
 template <typename T, typename SortAlgorithm>
-bool SortHandler<T, SortAlgorithm>::isSorted() {
-    TestSorting testSorting;
-    return testSorting.isSorted(data);
+void SortHandler<T, SortAlgorithm>::sort() {
+    auto start = std::chrono::high_resolution_clock::now();
+    sortAlgorithm.sort(data);
+    auto end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    executionTime = duration;
 }
 
 template <typename T, typename SortAlgorithm>
 std::vector<T> SortHandler<T, SortAlgorithm>::getData() {
     return data;
 }
+
+template <typename T, typename SortAlgorithm>
+std::chrono::duration<double> SortHandler<T, SortAlgorithm>::getExecutionTime() {
+    return executionTime;
+}
+
 
 template class SortHandler<int, BubbleSort<int>>;
 template class SortHandler<char, BubbleSort<char>>;

@@ -7,7 +7,7 @@
 template <typename T>
 class InsertionSort {
 public:
-    void sort(std::vector<T> &arr, std::less<> less);
+    void sort(std::vector<T> &arr);
 };
 
 
