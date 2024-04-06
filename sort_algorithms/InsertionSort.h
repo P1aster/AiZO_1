@@ -2,11 +2,12 @@
 #define AIZO_1_INSERTIONSORT_H
 
 
+#include <vector>
 
 template <typename T>
 class InsertionSort {
 public:
-    void sort(T* arr, int n);
+    void sort(std::vector<T> &arr, std::less<> less);
 };
 
 

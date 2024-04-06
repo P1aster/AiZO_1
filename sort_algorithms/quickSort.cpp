@@ -1,8 +1,8 @@
 #include <algorithm>
-#include "QuickSort.h"
+#include "quickSort.h"
 
 template <typename T>
-int QuickSort<T>::choosePivot(T* arr, int low, int high, PivotChoice pivotChoice) {
+int QuickSort<T>::choosePivot(int low, int high, PivotChoice pivotChoice) {
     switch(pivotChoice) {
         case LEFT:
             return low;
@@ -16,7 +16,7 @@ int QuickSort<T>::choosePivot(T* arr, int low, int high, PivotChoice pivotChoice
 }
 
 template <typename T>
-int QuickSort<T>::partition(T* arr, int low, int high, int pivot) {
+int QuickSort<T>::partition(std::vector<T>& arr, int low, int high, int pivot) {
     T pivotValue = arr[pivot];
     std::swap(arr[pivot], arr[high]);
     int i = (low - 1);
@@ -31,14 +31,14 @@ int QuickSort<T>::partition(T* arr, int low, int high, int pivot) {
 }
 
 template <typename T>
-void QuickSort<T>::sort(T* arr, int size, PivotChoice pivotChoice) {
-    quickSort(arr, 0, size - 1, pivotChoice);
+void QuickSort<T>::sort(std::vector<T>& arr, PivotChoice pivotChoice) {
+    quickSort(arr, 0, arr.size() - 1, pivotChoice);
 }
 
 template <typename T>
-void QuickSort<T>::quickSort(T* arr, int low, int high, PivotChoice pivotChoice) {
+void QuickSort<T>::quickSort(std::vector<T>& arr, int low, int high, PivotChoice pivotChoice) {
     if (low < high) {
-        int pivot = choosePivot(arr, low, high, pivotChoice);
+        int pivot = choosePivot(low, high, pivotChoice);
         int pi = partition(arr, low, high, pivot);
 
         quickSort(arr, low, pi - 1, pivotChoice);

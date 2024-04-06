@@ -10,6 +10,7 @@
 #include "sort_algorithms/InsertionSort.h"
 #include "sort_algorithms/shellSort.h"
 #include "sort_algorithms/mergeSort.h"
+#include "utilities/printArray.h"
 
 enum DataType { INT = 1, FLOAT = 2, CHAR = 3 };
 enum Operation { GENERATE = 1, READ = 2 };
@@ -40,6 +41,7 @@ int main() {
     FileHandler<float> fileHandlerFloat;
     FileHandler<char> fileHandlerChar;
     TestSorting testSorting;
+    PrintArray printVector;
 
     // User input
     int input;
@@ -87,13 +89,13 @@ int main() {
                 switch (sortMethod) {
                     case BUBBLESORT: {
                         BubbleSort<int> bubbleSort;
-                        bubbleSort.sort(vecInt.data(), vecInt.size());
+                        bubbleSort.sort(vecInt);
                     }
                         break;
                     case QUICKSORT: {
                         PivotChoice pivotChoice = RANDOM; // or any other choice based on your logic
                         QuickSort<int> quickSort;
-                        quickSort.sort(vecInt.data(), vecInt.size(), pivotChoice);
+                        quickSort.sort(vecInt, pivotChoice);
                     }
                         break;
                     case MERGESORT: {
@@ -103,17 +105,17 @@ int main() {
                         break;
                     case HEAPSORT: {
                         HeapSort<int> heapSort;
-                        heapSort.sort(vecInt.data(), vecInt.size());
+                        heapSort.sort(vecInt);
                     }
                         break;
                     case INSERTIONSORT: {
                         InsertionSort<int> insertionSort;
-                        insertionSort.sort(vecInt.data(), vecInt.size());
+                        insertionSort.sort(vecInt, std::less<>());
                     }
                         break;
                     case SHELLSORT: {
                         ShellSort<int> shellSort;
-                        shellSort.sort(vecInt.data(), vecInt.size());
+                        shellSort.sort(vecInt);
                     }
                         break;
                 }

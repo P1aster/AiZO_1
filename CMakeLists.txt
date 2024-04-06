@@ -26,4 +26,6 @@ add_executable(AiZO_1 main.cpp
         sort_algorithms/mergeSort.h
         menu/menu.cpp
         menu/menu.h
+        sort_method/sortHandler.cpp
+        sort_method/sortHandler.h
 )

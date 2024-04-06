@@ -121,6 +121,12 @@ build CMakeFiles/AiZO_1.dir/menu/menu.cpp.obj: CXX_COMPILER__AiZO_1_unscanned_De
   OBJECT_DIR = CMakeFiles\AiZO_1.dir
   OBJECT_FILE_DIR = CMakeFiles\AiZO_1.dir\menu
 
+build CMakeFiles/AiZO_1.dir/sort_method/sortHandler.cpp.obj: CXX_COMPILER__AiZO_1_unscanned_Debug C$:/Users/mikis/Documents/GitHub/AiZO_1/sort_method/sortHandler.cpp || cmake_object_order_depends_target_AiZO_1
+  DEP_FILE = CMakeFiles\AiZO_1.dir\sort_method\sortHandler.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\AiZO_1.dir
+  OBJECT_FILE_DIR = CMakeFiles\AiZO_1.dir\sort_method
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target AiZO_1
@@ -129,7 +135,7 @@ build CMakeFiles/AiZO_1.dir/menu/menu.cpp.obj: CXX_COMPILER__AiZO_1_unscanned_De
 #############################################
 # Link the executable AiZO_1.exe
 
-build AiZO_1.exe: CXX_EXECUTABLE_LINKER__AiZO_1_Debug CMakeFiles/AiZO_1.dir/main.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/InsertionSort.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/bubbleSort.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/quickSort.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/heapSort.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/shellSort.cpp.obj CMakeFiles/AiZO_1.dir/tests/testSorting.cpp.obj CMakeFiles/AiZO_1.dir/utilities/printArray.cpp.obj CMakeFiles/AiZO_1.dir/utilities/fileHandler.cpp.obj CMakeFiles/AiZO_1.dir/utilities/vectorGenerator.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/mergeSort.cpp.obj CMakeFiles/AiZO_1.dir/menu/menu.cpp.obj
+build AiZO_1.exe: CXX_EXECUTABLE_LINKER__AiZO_1_Debug CMakeFiles/AiZO_1.dir/main.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/InsertionSort.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/bubbleSort.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/quickSort.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/heapSort.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/shellSort.cpp.obj CMakeFiles/AiZO_1.dir/tests/testSorting.cpp.obj CMakeFiles/AiZO_1.dir/utilities/printArray.cpp.obj CMakeFiles/AiZO_1.dir/utilities/fileHandler.cpp.obj CMakeFiles/AiZO_1.dir/utilities/vectorGenerator.cpp.obj CMakeFiles/AiZO_1.dir/sort_algorithms/mergeSort.cpp.obj CMakeFiles/AiZO_1.dir/menu/menu.cpp.obj CMakeFiles/AiZO_1.dir/sort_method/sortHandler.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\AiZO_1.dir

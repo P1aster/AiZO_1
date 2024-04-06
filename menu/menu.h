@@ -4,13 +4,8 @@
 
 class Menu {
 public:
-    Menu();
-    void displayMenu();
-    void handleUserInput();
-    void performOperation();
-    void sortVector();
-    void checkIfSorted();
-    void writeToFile();
+
+
 };
 
 

@@ -5,13 +5,15 @@
 #ifndef AIZO_1_HEAPSORT_H
 #define AIZO_1_HEAPSORT_H
 
+#include <vector>
+
 template <typename T>
 class HeapSort {
 public:
-    void sort(T* arr, int n);
+    void sort(std::vector<T>& arr);
 
 private:
-    void heapify(T* arr, int n, int i);
+    void heapify(std::vector<T>& arr, int i);
 };
 
 

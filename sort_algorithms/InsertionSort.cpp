@@ -1,8 +1,8 @@
 #include "InsertionSort.h"
 
 template <typename T>
-void InsertionSort<T>::sort(T* arr, int n) {
-    for (int i = 1; i < n; i++) {
+void InsertionSort<T>::sort(std::vector<T> &arr, std::less<> less) {
+    for (int i = 1; i < arr.size(); i++) {
         T key = arr[i];
         int j = i - 1;
         while (j >= 0 && arr[j] > key) {

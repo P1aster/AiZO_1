@@ -1,7 +1,8 @@
 #include "shellSort.h"
 
 template <typename T>
-void ShellSort<T>::sort(T* arr, int n) {
+void ShellSort<T>::sort(std::vector<T>& arr) {
+    int n = arr.size();
     for (int gap = n / 2; gap > 0; gap /= 2) {
         for (int i = gap; i < n; i += 1) {
             T temp = arr[i];

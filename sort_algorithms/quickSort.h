@@ -1,23 +1,25 @@
 #ifndef AIZO_1_QUICKSORT_H
 #define AIZO_1_QUICKSORT_H
 
+#include <vector>
 
 enum PivotChoice {
     LEFT,
     RIGHT,
     MIDDLE,
-    RANDOM
+    RANDOM,
 };
 
 template <typename T>
 class QuickSort {
 public:
-    void sort(T* arr, int size, PivotChoice pivotChoice);
+    void sort(std::vector<T>& arr, PivotChoice pivotChoice = PivotChoice::RIGHT);
 
 private:
-    void quickSort(T* arr, int low, int high, PivotChoice pivotChoice);
-    int partition(T* arr, int low, int high, int pivot);
-    int choosePivot(T* arr, int low, int high, PivotChoice pivotChoice);
+    void quickSort(std::vector<T>& arr, int low, int high, PivotChoice pivotChoice);
+    int partition(std::vector<T>& arr, int low, int high, int pivot);
+    int choosePivot(int low, int high, PivotChoice pivotChoice);
 };
+
 
 #endif //AIZO_1_QUICKSORT_H
