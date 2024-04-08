@@ -11,8 +11,11 @@ T InputHandler::getEnumInput(int min, int max) {
         if (!std::cin.fail() && input >= min && input <= max) {
             return static_cast<T>(input);
         } else {
+            // discard the invalid input
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            // Print error message
             std::cout << "Invalid input. Please try again.\n";
         }
     }

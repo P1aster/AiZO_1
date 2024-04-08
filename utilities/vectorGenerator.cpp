@@ -16,9 +16,12 @@ std::vector<T> VectorGenerator<T>::generateRandomVector(int size) {
     std::srand(std::time(nullptr));
     std::vector<T> vec(size);
     for (int i = 0; i < size; ++i) {
+        // Generate random values for the vector
         if constexpr (std::is_same<T, float>::value) {
+            // Generate random float values between 0 and VALUE_MAX
             vec[i] = static_cast<T>(static_cast<float>(std::rand()) / static_cast<float>(RAND_MAX)) * static_cast<float>(VALUE_MAX);
         } else {
+            // Generate random integer or char values
             vec[i] = static_cast<T>(std::rand());
         }
     }

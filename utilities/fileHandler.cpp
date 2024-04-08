@@ -15,6 +15,7 @@ std::vector<T> FileHandler<T>::readVectorFromFile() {
         std::cin >> filename;
         file.open(filename);
 
+        // Check if the file exists
         if (file || filename == "exit") {
             break;
         } else {
@@ -26,11 +27,12 @@ std::vector<T> FileHandler<T>::readVectorFromFile() {
         return std::vector<T>();
     }
 
+    // Read the size of the vector
     int size;
     if (!(file >> size)) {
         throw FileReadException();
     }
-
+    // Read the values of the vector
     std::vector<T> vec(size);
     for (int i = 0; i < size; ++i) {
         if (!(file >> vec[i])) {
@@ -52,10 +54,12 @@ void FileHandler<T>::writeVectorToFile(const std::vector<T>& vec) {
     std::fstream file;
 
     while (true) {
+        // Ask the user for the filename
         std::cout << "Enter filename: ";
         std::cin >> filename;
         file.open(filename, std::ios::out | std::ios::trunc);
 
+        // Check if the file was opened successfully
         if (file) {
             break;
         } else {
@@ -64,6 +68,7 @@ void FileHandler<T>::writeVectorToFile(const std::vector<T>& vec) {
         }
     }
 
+    // Write the size of the vector
     file << vec.size() << "\n";
     for (const T& value : vec) {
         file << value << "\n";

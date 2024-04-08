@@ -3,6 +3,7 @@
 
 template <typename T>
 void PrintArray::print(const std::vector<T>& arr) {
+    // Print the elements of the array
     for(const auto& element : arr) {
         std::cout << element << " ";
     }
