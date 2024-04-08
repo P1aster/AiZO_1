@@ -17,11 +17,8 @@ T InputHandler::getEnumInput(int min, int max) {
         }
     }
 }
-
+template ExitOption InputHandler::getEnumInput<ExitOption>(int, int);
 template DataType InputHandler::getEnumInput<DataType>(int, int);
-template Operation InputHandler::getEnumInput<Operation>(int, int);
 template SortMethod InputHandler::getEnumInput<SortMethod>(int, int);
-template WriteOption InputHandler::getEnumInput<WriteOption>(int, int);
 template MenuOption InputHandler::getEnumInput<MenuOption>(int, int);
-template MenuMode InputHandler::getEnumInput<MenuMode>(int, int);
 template int InputHandler::getEnumInput<int>(int, int);

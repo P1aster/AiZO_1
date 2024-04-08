@@ -8,6 +8,8 @@
 #include "../sort_algorithms/mergeSort.h"
 #include "../sort_algorithms/heapSort.h"
 #include "../sort_algorithms/shellSort.h"
+#include "../utilities/printArray.h"
+#include "../utilities/vectorGenerator.h"
 
 template <typename T>
 bool TestSorting::isSorted(const std::vector<T>& arr) {
@@ -19,64 +21,75 @@ bool TestSorting::isSorted(const std::vector<T>& arr) {
     return true;
 }
 
+
 template <typename T>
-void TestSorting::runTests(std::vector<T>& vec, SortMethod sortMethod, int n, FileHandler<double>& fileHandler) {
+void TestSorting::runTests(SortMethod sortMethod, int size, int n) {
+    FileHandler<double> fileHandler;
     double totalTime = 0;
     std::vector<double> times(n);
+    std::vector<T> pomVector;
+    VectorGenerator<T> generator;
 
     for (int i = 0; i < n; ++i) {
-        auto start = std::chrono::high_resolution_clock::now();
-
+        pomVector = generator.generateRandomVector(size);
         // Sort vec using chosen method
         switch (sortMethod) {
             case BUBBLESORT: {
-                SortHandler<T, BubbleSort<T>> sortHandler(vec);
+                SortHandler<T, BubbleSort<T>> sortHandler(pomVector);
                 sortHandler.sort();
+                totalTime += sortHandler.getExecutionTime().count();
+                times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case QUICKSORT: {
-                SortHandler<T, QuickSort<T>> sortHandler(vec);
+                SortHandler<T, QuickSort<T>> sortHandler(pomVector);
                 sortHandler.sort(PivotChoice::RIGHT);
+                totalTime += sortHandler.getExecutionTime().count();
+                times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case INSERTIONSORT: {
-                SortHandler<T, InsertionSort<T>> sortHandler(vec);
+                SortHandler<T, InsertionSort<T>> sortHandler(pomVector);
                 sortHandler.sort();
+                totalTime += sortHandler.getExecutionTime().count();
+                times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case MERGESORT: {
-                SortHandler<T, MergeSort<T>> sortHandler(vec);
+                SortHandler<T, MergeSort<T>> sortHandler(pomVector);
                 sortHandler.sort();
+                totalTime += sortHandler.getExecutionTime().count();
+                times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case HEAPSORT: {
-                SortHandler<T, HeapSort<T>> sortHandler(vec);
+                SortHandler<T, HeapSort<T>> sortHandler(pomVector);
                 sortHandler.sort();
+                totalTime += sortHandler.getExecutionTime().count();
+                times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case SHELLSORT: {
-                SortHandler<T, ShellSort<T>> sortHandler(vec);
+                SortHandler<T, ShellSort<T>> sortHandler(pomVector);
                 sortHandler.sort();
+                totalTime += sortHandler.getExecutionTime().count();
+                times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
         }
-
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double, std::milli> executionTime = end - start;
-        totalTime += executionTime.count();
-        times[i] = executionTime.count();
     }
 
     double averageTime = totalTime / n;
     times.push_back(averageTime);
     std::cout << "Average time: " << averageTime << " ms\n";
-//    fileHandler.writeVectorToFile(times);
+    std::cout << "Write test result to file.\n";
+    fileHandler.writeVectorToFile(times);
 }
 
 template bool TestSorting::isSorted<int>(const std::vector<int>&);
 template bool TestSorting::isSorted<float>(const std::vector<float>&);
 template bool TestSorting::isSorted<char>(const std::vector<char>&);
 
-template void TestSorting::runTests<int>(std::vector<int>&, SortMethod, int, FileHandler<double>&);
-template void TestSorting::runTests<float>(std::vector<float>&, SortMethod, int, FileHandler<double>&);
-template void TestSorting::runTests<char>(std::vector<char>&, SortMethod, int, FileHandler<double>&);
+template void TestSorting::runTests<int>(SortMethod, int, int);
+template void TestSorting::runTests<float>(SortMethod, int, int);
+template void TestSorting::runTests<char>(SortMethod, int, int);

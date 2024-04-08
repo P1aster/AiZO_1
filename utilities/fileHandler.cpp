@@ -52,7 +52,7 @@ void FileHandler<T>::writeVectorToFile(const std::vector<T>& vec) {
     std::fstream file;
 
     while (true) {
-        std::cout << "\nEnter filename: ";
+        std::cout << "Enter filename: ";
         std::cin >> filename;
         file.open(filename, std::ios::out | std::ios::trunc);
 
