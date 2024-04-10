@@ -4,16 +4,16 @@
 #include <vector>
 
 enum PivotChoice {
-    LEFT,
-    RIGHT,
-    MIDDLE,
-    RANDOM,
+    PIVOT_LEFT = 1,
+    PIVOT_RIGHT = 2,
+    PIVOT_MIDDLE = 3,
+    PIVOT_RANDOM = 4
 };
 
 template <typename T>
 class QuickSort {
 public:
-    void sort(std::vector<T>& arr, PivotChoice pivotChoice = PivotChoice::RIGHT);
+    void sort(std::vector<T>& arr, PivotChoice pivotChoice);
 
 private:
     void quickSort(std::vector<T>& arr, int low, int high, PivotChoice pivotChoice);

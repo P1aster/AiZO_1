@@ -47,6 +47,7 @@ class FileHandler {
 public:
     std::vector<T> readVectorFromFile();
     void writeVectorToFile(const std::vector<T>& vec);
+    void writeVectorToFile(const std::vector<T>& vec, std::string filename);
 };
 
 

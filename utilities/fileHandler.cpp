@@ -49,6 +49,30 @@ std::vector<T> FileHandler<T>::readVectorFromFile() {
 }
 
 template <typename T>
+void FileHandler<T>::writeVectorToFile(const std::vector<T>& vec, std::string filename) {
+    std::fstream file;
+
+    while (true) {
+        file.open(filename, std::ios::out | std::ios::trunc);
+
+        // Check if the file was opened successfully
+        if (file) {
+            break;
+        } else {
+            std::cout << "\nFailed to open file: " << filename << ". Please try again.\n";
+            std::cout << "Error: " << strerror(errno) << "\n";
+        }
+    }
+
+    // Write the size of the vector
+    file << vec.size() << "\n";
+    for (const T& value : vec) {
+        file << value << "\n";
+    }
+    file.close();
+}
+
+template <typename T>
 void FileHandler<T>::writeVectorToFile(const std::vector<T>& vec) {
     std::string filename;
     std::fstream file;

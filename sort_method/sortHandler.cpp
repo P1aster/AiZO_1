@@ -6,35 +6,17 @@
 #include "../sort_algorithms/shellSort.h"
 #include "../sort_algorithms/mergeSort.h"
 
-// Constructor which receive two template arguments and a vector of type T
 template <typename T, typename SortAlgorithm>
 SortHandler<T, SortAlgorithm>::SortHandler(std::vector<T> data) : data(data) {}
 
 template <typename T, typename SortAlgorithm>
 void SortHandler<T, SortAlgorithm>::sort(PivotChoice pivotChoice) {
-    //start the timer
     auto start = std::chrono::high_resolution_clock::now();
-
-    //check if the sort algorithm is QuickSort
     if constexpr (std::is_same_v<SortAlgorithm, QuickSort<T>>) {
         sortAlgorithm.sort(data, pivotChoice);
-    }
-    else {
+    } else {
         sortAlgorithm.sort(data);
     }
-
-    //end the timer
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<float, std::milli> duration = end - start;
-    executionTime = duration;
-}
-
-template <typename T, typename SortAlgorithm>
-void SortHandler<T, SortAlgorithm>::sort() {
-    //start the timer
-    auto start = std::chrono::high_resolution_clock::now();
-    sortAlgorithm.sort(data);
-    //end the timer
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float, std::milli> duration = end - start;
     executionTime = duration;
@@ -49,7 +31,6 @@ template <typename T, typename SortAlgorithm>
 std::chrono::duration<float> SortHandler<T, SortAlgorithm>::getExecutionTime() {
     return executionTime;
 }
-
 
 template class SortHandler<int, BubbleSort<int>>;
 template class SortHandler<char, BubbleSort<char>>;

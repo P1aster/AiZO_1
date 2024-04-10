@@ -1,17 +1,25 @@
 #include <algorithm>
+#include <iostream>
 #include "quickSort.h"
+#include "../utilities/inputHandler.h"
+
+
+
 
 template <typename T>
 int QuickSort<T>::choosePivot(int low, int high, PivotChoice pivotChoice) {
     switch(pivotChoice) {
-        case LEFT:
+        case PIVOT_LEFT:
             return low;
-        case RIGHT:
+        case PIVOT_RIGHT:
             return high;
-        case MIDDLE:
+        case PIVOT_MIDDLE:
             return low + (high - low) / 2;
-        case RANDOM:
+        case PIVOT_RANDOM:
+            std::cout <<  low + rand() % (high - low + 1);
             return low + rand() % (high - low + 1);
+        default:
+            throw std::invalid_argument("Invalid pivot choice");
     }
 }
 

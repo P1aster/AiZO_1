@@ -1,6 +1,7 @@
 #ifndef AIZO_1_VECTORGENERATOR_H
 #define AIZO_1_VECTORGENERATOR_H
 #include <vector>
+#include "../menu/menu.h"
 
 
 /*
@@ -24,6 +25,11 @@ class VectorGenerator {
 public:
     std::vector<T> createVector(int size);
     std::vector<T> generateRandomVector(int size);
+    std::vector<T> generateVector(VectorTypes vectorType, int size);
+private:
+    std::vector<T> generateAscendingVector(int size);
+    std::vector<T> generateDescendingVector(int size);
+    std::vector<T> generatePartiallySortedVector(int size, double sortedFraction);
 
 };
 
