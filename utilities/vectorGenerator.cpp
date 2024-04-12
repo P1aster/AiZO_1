@@ -71,6 +71,7 @@ std::vector<T> VectorGenerator<T>::generatePartiallySortedVector(int size, doubl
 }
 
 
+
 template class VectorGenerator<int>;
 template class VectorGenerator<float>;
 template class VectorGenerator<char>;

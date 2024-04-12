@@ -432,25 +432,34 @@ int main() {
                 int repetitions = inputHandler.getEnumInput<int>(1,200);
 
                 std::cout << "------------------------------START" << std::endl;
-
-                auto start = std::chrono::high_resolution_clock::now();
-                auto end = std::chrono::high_resolution_clock::now();
-                std::chrono::duration<float, std::milli> duration = end - start;
-
-                for (int size : sizes) {
-                    for (DataType dataType: dataTypes) {
-                        for (SortMethod sortMethod: sortMethods) {
-                            for (VectorTypes vectorType: vectorTypes) {
+                for (DataType dataType: dataTypes) {
+                    for (int size : sizes) {
+                        for (VectorTypes vectorType: vectorTypes) {
+                            switch (dataType) {
+                                case INT: {
+                                    vecInt = generatorInt.generateVector(vectorType, size);
+                                    break;
+                                }
+                                case FLOAT: {
+                                    vecFloat = generatorFloat.generateVector(vectorType, size);
+                                    break;
+                                }
+                                case CHAR: {
+                                    vecChar = generatorChar.generateVector(vectorType, size);
+                                    break;
+                                }
+                            }
+                            for (SortMethod sortMethod: sortMethods) {
                                 auto start = std::chrono::high_resolution_clock::now();
                                 switch (dataType) {
                                     case INT:
-                                        testSorting.runTests<int>(sortMethod, vectorType, size, repetitions);
+                                        testSorting.runTests<int>(sortMethod, vectorType, vecInt, size, repetitions);
                                         break;
                                     case FLOAT:
-                                        testSorting.runTests<float>(sortMethod, vectorType, size, repetitions);
+                                        testSorting.runTests<float>(sortMethod, vectorType, vecFloat, size, repetitions);
                                         break;
                                     case CHAR:
-                                        testSorting.runTests<char>(sortMethod, vectorType, size, repetitions);
+                                        testSorting.runTests<char>(sortMethod, vectorType, vecChar, size, repetitions);
                                         break;
                                 }
                                 auto end = std::chrono::high_resolution_clock::now();

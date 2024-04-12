@@ -11,15 +11,16 @@ SortHandler<T, SortAlgorithm>::SortHandler(std::vector<T> data) : data(data) {}
 
 template <typename T, typename SortAlgorithm>
 void SortHandler<T, SortAlgorithm>::sort(PivotChoice pivotChoice) {
-    auto start = std::chrono::high_resolution_clock::now();
+
+    auto start = std::chrono::high_resolution_clock ::now();
     if constexpr (std::is_same_v<SortAlgorithm, QuickSort<T>>) {
         sortAlgorithm.sort(data, pivotChoice);
     } else {
         sortAlgorithm.sort(data);
     }
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<float, std::milli> duration = end - start;
-    executionTime = duration;
+    auto end = std::chrono::high_resolution_clock ::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    executionTime = elapsed;
 }
 
 template <typename T, typename SortAlgorithm>

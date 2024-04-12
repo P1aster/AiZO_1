@@ -12,7 +12,7 @@ public:
     bool isSorted(const std::vector<T>& arr);
 
     template <typename T>
-    void runTests(SortMethod sortMethod, VectorTypes vectorType, int size, int n);
+    void runTests(SortMethod sortMethod, VectorTypes vectorType, std::vector<T> vector, int size, int repetitions);
 };
 
 #endif //AIZO_1_TESTSORTING_H

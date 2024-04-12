@@ -23,56 +23,52 @@ bool TestSorting::isSorted(const std::vector<T>& arr) {
 
 
 template <typename T>
-void TestSorting::runTests(SortMethod sortMethod, VectorTypes vectorType, int size, int n) {
+void TestSorting::runTests(SortMethod sortMethod, VectorTypes vectorType, std::vector<T> vector, int size, int repetitions) {
     FileHandler<double> fileHandler;
     double totalTime = 0;
-    std::vector<double> times(n);
+    std::vector<double> times(repetitions);
     VectorGenerator<T> vectorGenerator;
 
-    for (int i = 0; i < n; ++i) {
-
-
-        std::vector<T> pomVector = vectorGenerator.generateVector(vectorType, size);
-
+    for (int i = 0; i < repetitions; ++i) {
         // Sort vec using chosen method
         switch (sortMethod) {
             case BUBBLESORT: {
-                SortHandler<T, BubbleSort<T>> sortHandler(pomVector);
+                SortHandler<T, BubbleSort<T>> sortHandler(vector);
                 sortHandler.sort();
                 totalTime += sortHandler.getExecutionTime().count();
                 times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case QUICKSORT: {
-                SortHandler<T, QuickSort<T>> sortHandler(pomVector);
-                sortHandler.sort(PivotChoice::PIVOT_RIGHT);
+                SortHandler<T, QuickSort<T>> sortHandler(vector);
+                sortHandler.sort(PivotChoice::PIVOT_MIDDLE);
                 totalTime += sortHandler.getExecutionTime().count();
                 times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case INSERTIONSORT: {
-                SortHandler<T, InsertionSort<T>> sortHandler(pomVector);
+                SortHandler<T, InsertionSort<T>> sortHandler(vector);
                 sortHandler.sort();
                 totalTime += sortHandler.getExecutionTime().count();
                 times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case MERGESORT: {
-                SortHandler<T, MergeSort<T>> sortHandler(pomVector);
+                SortHandler<T, MergeSort<T>> sortHandler(vector);
                 sortHandler.sort();
                 totalTime += sortHandler.getExecutionTime().count();
                 times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case HEAPSORT: {
-                SortHandler<T, HeapSort<T>> sortHandler(pomVector);
+                SortHandler<T, HeapSort<T>> sortHandler(vector);
                 sortHandler.sort();
                 totalTime += sortHandler.getExecutionTime().count();
                 times[i] = sortHandler.getExecutionTime().count();
             }
                 break;
             case SHELLSORT: {
-                SortHandler<T, ShellSort<T>> sortHandler(pomVector);
+                SortHandler<T, ShellSort<T>> sortHandler(vector);
                 sortHandler.sort();
                 totalTime += sortHandler.getExecutionTime().count();
                 times[i] = sortHandler.getExecutionTime().count();
@@ -81,7 +77,7 @@ void TestSorting::runTests(SortMethod sortMethod, VectorTypes vectorType, int si
         }
     }
 
-    double averageTime = totalTime / n;
+    double averageTime = totalTime / repetitions;
     times.push_back(averageTime);
 
 
@@ -92,6 +88,6 @@ template bool TestSorting::isSorted<int>(const std::vector<int>&);
 template bool TestSorting::isSorted<float>(const std::vector<float>&);
 template bool TestSorting::isSorted<char>(const std::vector<char>&);
 
-template void TestSorting::runTests<int>(SortMethod, VectorTypes, int, int);
-template void TestSorting::runTests<float>(SortMethod, VectorTypes, int, int);
-template void TestSorting::runTests<char>(SortMethod, VectorTypes, int, int);
+template void TestSorting::runTests<int>(SortMethod, VectorTypes, std::vector<int>, int, int);
+template void TestSorting::runTests<float>(SortMethod, VectorTypes, std::vector<float>, int, int);
+template void TestSorting::runTests<char>(SortMethod, VectorTypes, std::vector<char>, int, int);

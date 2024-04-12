@@ -10,10 +10,9 @@ class SortHandler {
 private:
     SortAlgorithm sortAlgorithm;
     std::vector<T> data;
-    std::chrono::duration<float> executionTime;
+    std::chrono::duration<float, std::milli> executionTime;
 public:
     SortHandler(std::vector<T> data);
-//    void sort();
     void sort(PivotChoice pivotChoice = PivotChoice::PIVOT_RIGHT);
     std::vector<T> getData();
     std::chrono::duration<float> getExecutionTime();
