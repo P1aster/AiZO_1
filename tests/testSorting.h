@@ -4,7 +4,7 @@
 #include "../utilities/fileHandler.h"
 #include "../menu/menu.h"
 #include <vector>
-
+#include <chrono>
 
 class TestSorting {
 public:
@@ -12,7 +12,7 @@ public:
     bool isSorted(const std::vector<T>& arr);
 
     template <typename T>
-    void runTests(SortMethod sortMethod, VectorTypes vectorType, std::vector<T> vector, int size, int repetitions);
+    std::chrono::duration<double, std::milli> runTests(SortMethod sortMethod, std::vector<T> vector, long repetitions); // Change this
 };
 
 #endif //AIZO_1_TESTSORTING_H

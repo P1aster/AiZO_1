@@ -1,3 +1,4 @@
+#include <iostream>
 #include "sortHandler.h"
 #include "../tests/testSorting.h"
 #include "../sort_algorithms/bubbleSort.h"
@@ -19,8 +20,10 @@ void SortHandler<T, SortAlgorithm>::sort(PivotChoice pivotChoice) {
         sortAlgorithm.sort(data);
     }
     auto end = std::chrono::high_resolution_clock ::now();
-    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    executionTime = elapsed;
+    //duration_cast to get time in milliseconds with 6 digits after comma
+    executionTime = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end - start);
+
+    executionTime = std::chrono::duration_cast<std::chrono::duration<double, std::milli>>(end - start);
 }
 
 template <typename T, typename SortAlgorithm>
@@ -29,7 +32,7 @@ std::vector<T> SortHandler<T, SortAlgorithm>::getData() {
 }
 
 template <typename T, typename SortAlgorithm>
-std::chrono::duration<float> SortHandler<T, SortAlgorithm>::getExecutionTime() {
+std::chrono::duration<double, std::milli> SortHandler<T, SortAlgorithm>::getExecutionTime() {
     return executionTime;
 }
 

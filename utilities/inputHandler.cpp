@@ -64,6 +64,7 @@ template MainMenuOption InputHandler::getEnumInput<MainMenuOption>(int, int);
 
 template PivotChoice InputHandler::getEnumInput<PivotChoice>(int, int);
 template int InputHandler::getEnumInput<int>(int, int);
+template long InputHandler::getEnumInput<long>(int, int);
 
 template std::vector<int> InputHandler::getEnumsInput<int>(int, int);
 template std::vector<DataType> InputHandler::getEnumsInput<DataType>(int, int);

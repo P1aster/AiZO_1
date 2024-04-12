@@ -10,12 +10,14 @@ class SortHandler {
 private:
     SortAlgorithm sortAlgorithm;
     std::vector<T> data;
-    std::chrono::duration<float, std::milli> executionTime;
+    std::chrono::duration<double, std::milli> executionTime;
+
 public:
     SortHandler(std::vector<T> data);
     void sort(PivotChoice pivotChoice = PivotChoice::PIVOT_RIGHT);
     std::vector<T> getData();
-    std::chrono::duration<float> getExecutionTime();
+    std::chrono::duration<double, std::milli> getExecutionTime();
+
 };
 
 #endif //AIZO_1_SORTHANDLERTEMPLATE_H

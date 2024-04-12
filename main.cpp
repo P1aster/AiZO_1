@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <cstring>
 
 #include "utilities/vectorGenerator.h"
 #include "utilities/fileHandler.h"
@@ -429,7 +431,25 @@ int main() {
                 std::vector<int> sizes = inputHandler.getEnumsInput<int>(1, 10000000);
 
                 std::cout << "Enter the number of times to test algorithm: ";
-                int repetitions = inputHandler.getEnumInput<int>(1,200);
+                long repetitions = inputHandler.getEnumInput<long>(1,200);
+
+                std::string filename;
+                std::fstream file;
+
+                std::chrono::duration<double, std::milli> executionTime = std::chrono::duration<double, std::milli>::zero();
+                std::cout << "Enter filename: ";
+                std::cin >> filename;
+
+                //add flags to create file if it does not exist or clear it if it does exist
+                file.open(filename, std::ios::out);
+                // Check if the file was opened successfully
+                if (!file) {
+                    std::cerr << "Failed to open file.\n";
+                } else {
+                    file << "SIZE" << "," << "DATA_TYPE" << "," << "SORT_METHOD" << "," << "VECTOR_TYPE"  << "," << "EXECUTION_TIME" << "\n";
+                    file.close();
+                }
+
 
                 std::cout << "------------------------------START" << std::endl;
                 for (DataType dataType: dataTypes) {
@@ -453,15 +473,27 @@ int main() {
                                 auto start = std::chrono::high_resolution_clock::now();
                                 switch (dataType) {
                                     case INT:
-                                        testSorting.runTests<int>(sortMethod, vectorType, vecInt, size, repetitions);
+                                        executionTime = testSorting.runTests<int>(sortMethod, vecInt, repetitions);
                                         break;
                                     case FLOAT:
-                                        testSorting.runTests<float>(sortMethod, vectorType, vecFloat, size, repetitions);
+                                        executionTime = testSorting.runTests<float>(sortMethod, vecFloat, repetitions);
                                         break;
                                     case CHAR:
-                                        testSorting.runTests<char>(sortMethod, vectorType, vecChar, size, repetitions);
+                                        executionTime = testSorting.runTests<char>(sortMethod, vecChar, repetitions);
                                         break;
                                 }
+                                //add flags to open file in append mode
+                                file.open(filename,  std::ios::out | std::ios::app);
+
+                                // Check if the file was opened successfully
+                                if (!file) {
+                                    std::cerr << "Failed to open file.\n";
+                                } else {
+                                    file << size << "," << dataType << "," << sortMethod  << "," <<  vectorType  << "," << executionTime.count() << "\n";
+                                    file.close();
+                                }
+
+                                std::cout << "AVERAGE EXECUTION TIME: " << executionTime << std::endl;
                                 auto end = std::chrono::high_resolution_clock::now();
                                 std::chrono::duration<float, std::milli> duration = end - start;
                                 std::cout << "------------------------------" << duration << std::endl;
